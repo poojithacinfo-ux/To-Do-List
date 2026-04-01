@@ -1,8 +1,5 @@
 ## To-Do App
 
-## PROJECT LINK: 
-file:///C:/Users/chall/Downloads/todo_watercolor_scene.html
-
 ## Features
 
 -Add tasks with a title, category, priority level, and due date
@@ -13,5 +10,7 @@ file:///C:/Users/chall/Downloads/todo_watercolor_scene.html
 -Task count summary
 -Fully responsive, runs in any browser with zero dependencies
 
+## project link: 
+file:///C:/Users/chall/Downloads/todo_watercolor_scene.html
 
 
