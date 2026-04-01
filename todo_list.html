@@ -1,0 +1,163 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+#bg {
+  min-height: 100vh;
+  padding: 3rem 1rem;
+  background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/4QB0RXhpZgAATU0AKgAAAAgABQEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAAITAAMAAAABAAEAAMb+AAIAAAARAAAAWgAAAAAAAABIAAAAAQAAAEgAAAABR29vZ2xlIEluYy4gMjAxNgAA/+IB2ElDQ19QUk9GSUxFAAEBAAAByAAAAAAEMAAAbW50clJHQiBYWVogB+AAAQABAAAAAAAAYWNzcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAPbWAAEAAAAA0y0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJZGVzYwAAAPAAAAAkclhZWgAAARQAAAAUZ1hZWgAAASgAAAAUYlhZWgAAATwAAAAUd3RwdAAAAVAAAAAUclRSQwAAAWQAAAAoZ1RSQwAAAWQAAAAoYlRSQwAAAWQAAAAoY3BydAAAAYwAAAA8bWx1YwAAAAAAAAABAAAADGVuVVMAAAAIAAAAHABzAFIARwBCWFlaIAAAAAAAAG+iAAA49QAAA5BYWVogAAAAAAAAYpkAALeFAAAY2lhZWiAAAAAAAAAkoAAAD4QAALbPWFlaIAAAAAAAAPbWAAEAAAAA0y1wYXJhAAAAAAAEAAAAAmZmAADypwAADVkAABPQAAAKWwAAAAAAAAAAbWx1YwAAAAAAAAABAAAADGVuVVMAAAAgAAAAHABHAG8AbwBnAGwAZQAgAEkAbgBjAC4AIAAyADAAMQA2');
+  background-size: cover;
+  background-position: center top;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+#card {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.65);
+  box-shadow: 0 8px 48px rgba(100,90,140,0.14), 0 1.5px 6px rgba(0,0,0,0.06);
+  padding: 2rem 2rem 1.5rem;
+}
+h1 { font-size: 20px; font-weight: 500; color: #3a2f5c; margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+.add-bar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; background: rgba(255,255,255,0.6); border: 1px solid rgba(180,170,220,0.4); border-radius: 14px; padding: 14px 16px; }
+.add-bar input[type=text] { font-size: 14px; border: none; background: transparent; color: #3a2f5c; outline: none; width: 100%; }
+.add-bar input[type=text]::placeholder { color: #9a8fc0; }
+.add-row { display: flex; gap: 7px; align-items: center; flex-wrap: wrap; }
+select, input[type=date] { font-size: 12px; padding: 5px 8px; border-radius: 8px; border: 1px solid rgba(160,150,210,0.4); background: rgba(255,255,255,0.7); color: #5a4e7e; cursor: pointer; }
+select option { color: #333; background: #fff; }
+.add-btn { margin-left: auto; font-size: 13px; padding: 6px 18px; border-radius: 8px; border: none; background: #7c6db0; color: #fff; cursor: pointer; font-weight: 500; }
+.add-btn:hover { background: #6254a0; }
+.filters { display: flex; gap: 5px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.filter-btn { font-size: 12px; padding: 4px 12px; border-radius: 999px; border: 1px solid rgba(160,150,210,0.35); background: transparent; color: #7c6db0; cursor: pointer; }
+.filter-btn.active { background: #7c6db0; color: #fff; border-color: #7c6db0; font-weight: 500; }
+.task-list { display: flex; flex-direction: column; gap: 7px; }
+.task { display: flex; align-items: flex-start; gap: 11px; background: rgba(255,255,255,0.6); border: 1px solid rgba(180,170,220,0.35); border-radius: 12px; padding: 11px 13px; transition: background 0.15s; }
+.task:hover { background: rgba(255,255,255,0.8); }
+.task.done { opacity: 0.5; }
+.task-check { width: 17px; height: 17px; border-radius: 5px; border: 1.5px solid #b0a0d8; background: transparent; cursor: pointer; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; }
+.task-check.checked { background: #7c6db0; border-color: #7c6db0; }
+.task-check.checked::after { content: ''; display: block; width: 4px; height: 7px; border: 1.5px solid #fff; border-top: none; border-left: none; transform: rotate(45deg) translate(-1px,-1px); }
+.task-body { flex: 1; min-width: 0; }
+.task-text { font-size: 14px; color: #3a2f5c; line-height: 1.4; }
+.task.done .task-text { text-decoration: line-through; color: #b0a8cc; }
+.task-meta { display: flex; gap: 5px; margin-top: 5px; flex-wrap: wrap; align-items: center; }
+.badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; font-weight: 500; background: rgba(200,190,240,0.35); color: #5a4e7e; }
+.badge-p1 { background: rgba(255,180,180,0.35); color: #8a2020; }
+.badge-p2 { background: rgba(255,220,140,0.45); color: #7a5000; }
+.badge-date { font-size: 11px; color: #9a8fc0; }
+.badge-date.overdue { color: #b03030; font-weight: 500; }
+.del-btn { font-size: 14px; color: #c0b8d8; background: none; border: none; cursor: pointer; padding: 0; flex-shrink: 0; opacity: 0; transition: opacity 0.15s; line-height: 1; }
+.task:hover .del-btn { opacity: 1; }
+.del-btn:hover { color: #b03030; }
+.empty { text-align: center; color: #a098c0; font-size: 13px; padding: 2rem 0; }
+.count { font-size: 12px; color: #a098c0; margin-top: 1rem; text-align: right; }
+</style>
+
+<div id="bg">
+  <div id="card">
+    <h1>My Tasks</h1>
+    <div class="add-bar">
+      <input type="text" id="task-input" placeholder="Add a new task..." />
+      <div class="add-row">
+        <select id="cat-select">
+          <option value="">No category</option>
+          <option value="Work">Work</option>
+          <option value="Personal">Personal</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Health">Health</option>
+        </select>
+        <select id="pri-select">
+          <option value="3" selected>Low</option>
+          <option value="2">Medium</option>
+          <option value="1">High</option>
+        </select>
+        <input type="date" id="due-input" />
+        <button class="add-btn" onclick="addTask()">+ Add</button>
+      </div>
+    </div>
+    <div class="filters" id="filter-bar"></div>
+    <div class="task-list" id="task-list"></div>
+    <div class="count" id="count"></div>
+  </div>
+</div>
+
+<script>
+const PRI_LABELS = { 1: 'High', 2: 'Medium', 3: '' };
+const today = new Date().toISOString().slice(0, 10);
+
+let tasks = [
+  { id: 1, text: 'Review project proposal', cat: 'Work', pri: 1, due: today, done: false },
+  { id: 2, text: 'Buy groceries', cat: 'Shopping', pri: 3, due: '', done: false },
+  { id: 3, text: 'Morning run', cat: 'Health', pri: 2, due: '', done: true },
+];
+let nextId = 4;
+let filter = 'All';
+
+function formatDate(d) {
+  if (!d) return '';
+  if (d === today) return 'Today';
+  return new Date(d + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function getFilters() {
+  const cats = [...new Set(tasks.map(t => t.cat).filter(Boolean))];
+  return ['All', 'Active', 'Done', ...cats];
+}
+
+function renderFilters() {
+  document.getElementById('filter-bar').innerHTML = getFilters().map(f =>
+    `<button class="filter-btn ${filter === f ? 'active' : ''}" onclick="setFilter('${f}')">${f}</button>`
+  ).join('');
+}
+
+function setFilter(f) { filter = f; render(); }
+
+function filtered() {
+  if (filter === 'All') return tasks;
+  if (filter === 'Active') return tasks.filter(t => !t.done);
+  if (filter === 'Done') return tasks.filter(t => t.done);
+  return tasks.filter(t => t.cat === filter);
+}
+
+function render() {
+  renderFilters();
+  const ft = filtered();
+  const list = document.getElementById('task-list');
+  if (!ft.length) { list.innerHTML = '<div class="empty">No tasks here</div>'; return; }
+  list.innerHTML = ft.map(t => `
+    <div class="task ${t.done ? 'done' : ''}">
+      <div class="task-check ${t.done ? 'checked' : ''}" onclick="toggle(${t.id})"></div>
+      <div class="task-body">
+        <div class="task-text">${t.text}</div>
+        <div class="task-meta">
+          ${t.cat ? `<span class="badge">${t.cat}</span>` : ''}
+          ${PRI_LABELS[t.pri] ? `<span class="badge badge-p${t.pri}">${PRI_LABELS[t.pri]}</span>` : ''}
+          ${t.due ? `<span class="badge-date ${t.due < today && !t.done ? 'overdue' : ''}">${formatDate(t.due)}</span>` : ''}
+        </div>
+      </div>
+      <button class="del-btn" onclick="del(${t.id})">&#x2715;</button>
+    </div>
+  `).join('');
+  const active = tasks.filter(t => !t.done).length;
+  document.getElementById('count').textContent = `${active} task${active !== 1 ? 's' : ''} remaining`;
+}
+
+function addTask() {
+  const input = document.getElementById('task-input');
+  const text = input.value.trim();
+  if (!text) return;
+  tasks.unshift({ id: nextId++, text, cat: document.getElementById('cat-select').value, pri: parseInt(document.getElementById('pri-select').value), due: document.getElementById('due-input').value, done: false });
+  input.value = '';
+  render();
+}
+
+function toggle(id) { const t = tasks.find(t => t.id === id); if (t) { t.done = !t.done; render(); } }
+function del(id) { tasks = tasks.filter(t => t.id !== id); render(); }
+
+document.getElementById('task-input').addEventListener('keydown', e => { if (e.key === 'Enter') addTask(); });
+render();
+</script>
